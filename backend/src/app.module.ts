@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ChanelModule } from './chanel/chanel.module';
 
 @Module({
-  imports: [ChanelModule],
+  imports: [
+    ChanelModule,
+    MongooseModule.forRoot('mongodb://localhost/my_tube'),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
