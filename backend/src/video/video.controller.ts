@@ -8,6 +8,8 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  ParseFilePipe,
+  FileTypeValidator,
 } from '@nestjs/common';
 import { VideoService } from './video.service';
 import { CreateVideoDto } from './dto/create-video.dto';
@@ -19,12 +21,17 @@ export class VideoController {
   constructor(private readonly videoService: VideoService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('video'))
+  @UseInterceptors(FileInterceptor('file'))
   create(
-    @Body() createVideoDto: CreateVideoDto,
-    @UploadedFile() video: Express.Multer.File,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: 'video/mp4' })],
+      }),
+    )
+    video: Express.Multer.File,
   ) {
-    return this.videoService.create(createVideoDto);
+    console.log(video);
+    // return this.videoService.create(createVideoDto);
   }
 
   @Get()
