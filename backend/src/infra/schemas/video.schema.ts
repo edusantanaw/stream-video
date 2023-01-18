@@ -13,6 +13,9 @@ export class Video {
 
   @Prop({ required: true })
   video: string;
+
+  @Prop({ required: true })
+  tubnail: string;
 }
 
 export const VideoSchema = SchemaFactory.createForClass(Video);
