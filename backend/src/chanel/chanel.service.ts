@@ -15,7 +15,7 @@ export class ChanelService {
     const verifyEmail = await this.chanelModel.findOne({
       email: createChanelDto.email,
     });
-    if (verifyEmail) throw 'Email already being used!';
+    if (verifyEmail) throw 'Email já está secndo usado!';
     const chanel = new this.chanelModel(createChanelDto);
     await chanel.save();
     return chanel;
@@ -33,12 +33,12 @@ export class ChanelService {
 
   async update(id: number, updateChanelDto: UpdateChanelDto) {
     const chanelExists = await this.chanelModel.findById(id);
-    if (!chanelExists) throw 'Chanel not exists';
+    if (!chanelExists) throw 'Canal não existe!';
     if (chanelExists.email !== updateChanelDto.email) {
       const verifyEmail = await this.chanelModel.findOne({
         email: updateChanelDto.email,
       });
-      if (verifyEmail) throw 'Email already being used!';
+      if (verifyEmail) throw 'Email já está sendo usado!';
     }
     const updateChanel = new this.chanelModel({ id, ...updateChanelDto });
     updateChanel.save();
@@ -47,7 +47,7 @@ export class ChanelService {
 
   async remove(id: number) {
     const chanelExists = await this.chanelModel.findById({ id });
-    if (!chanelExists) throw 'Chanel not exists!';
+    if (!chanelExists) throw 'Canal não existe!';
     await this.chanelModel.findByIdAndRemove({ id });
     return null;
   }
